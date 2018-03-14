@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="./css/index.css">
+</head>
+<body>
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/service-worker.js')
+        .then(function (register) {
+          // 注册成功
+          console.log('ServiceWorker registration success with scope: ', register.scope)
+        })
+        .catch(function (err) {
+          console.log('ServiceWorker registration failed: ', err)
+        })
+    }
+  </script>
+  <h1>这是关于pwa的一个小demo</h1>
+  <br>
+  <br>
+  <h2>这个按钮用来测试sw能否缓存fetch请求</h2>
+  <button id="button">测试</button>
+  <script>  
+    const button = document.getElementById('button')
+    button.onclick = function () {
+      fetch('/test')
+      .then(function (response) {
+        if (response.status !== 200) {
+          alert('服务器响应失败')
+        }
+        return response.json()
+      })
+      .then(function (data) {
+        alert(data.data)
+      })
+      .catch(function (error) {
+        alert('http请求发送失败')
+      })
+    }
+  </script>
+  <br>
+  <br>
+  <img src="./img/background.jpg" alt="">
+  <script src="./js/test.js"></script>
+</body>
+</html>
